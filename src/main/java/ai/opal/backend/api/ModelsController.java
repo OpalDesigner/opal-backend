@@ -10,9 +10,11 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 public class ModelsController {
     private final ModelService modelService;
+    private final R2DownloadService r2DownloadService;
 
-    public ModelsController(ModelService modelService) {
+    public ModelsController(ModelService modelService, R2DownloadService r2DownloadService) {
         this.modelService = modelService;
+        this.r2DownloadService = r2DownloadService;
     }
 
     @GetMapping("/v1/models/#{id}")
