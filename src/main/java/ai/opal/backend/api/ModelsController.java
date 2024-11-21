@@ -1,6 +1,6 @@
 package ai.opal.backend.api;
 
-import ai.opal.backend.models.SceneModel;
+import ai.opal.backend.model.SceneModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

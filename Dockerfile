@@ -35,11 +35,11 @@ COPY --from=builder --chown=javauser:javauser /app/build/libs/*.jar app.jar
 
 # Configure JVM options
 ENV JAVA_OPTS="-XX:+UseContainerSupport \
-               -XX:MaxRAMPercentage=75.0 \
-               -XX:InitialRAMPercentage=50.0 \
-               -XX:+OptimizeStringConcat \
-               -XX:+UseStringDeduplication \
-               -Djava.security.egd=file:/dev/./urandom"
+    -XX:MaxRAMPercentage=75.0 \
+    -XX:InitialRAMPercentage=50.0 \
+    -XX:+OptimizeStringConcat \
+    -XX:+UseStringDeduplication \
+    -Djava.security.egd=file:/dev/./urandom"
 
 # Expose the application port
 EXPOSE 8080

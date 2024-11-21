@@ -1,7 +1,7 @@
 # Opal: Backend
 
 ```sh
-docker build -t backend .
+docker-compose up --build -d
 
-docker run -p 8080:8080 backend
+docker-compose logs -f
 ```

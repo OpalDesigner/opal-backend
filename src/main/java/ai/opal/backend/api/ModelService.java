@@ -1,6 +1,6 @@
 package ai.opal.backend.api;
 
-import ai.opal.backend.models.SceneModel;
+import ai.opal.backend.model.SceneModel;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -14,4 +14,3 @@ public class ModelService {
         return models.values();
     }
 }
-

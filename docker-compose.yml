@@ -1,6 +1,24 @@
 version: '3.8'
 
 services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=myappdb
+      - POSTGRES_USER=myappuser
+      - POSTGRES_PASSWORD=myapppassword
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - app-network
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U myappuser -d myappdb" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   app:
     build: .
     container_name: spring-boot-app
@@ -9,10 +27,17 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - JAVA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0
+      # Database Connection Environment Variables
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/myappdb
+      - SPRING_DATASOURCE_USERNAME=myappuser
+      - SPRING_DATASOURCE_PASSWORD=myapppassword
     networks:
       - app-network
+    depends_on:
+      postgres:
+        condition: service_healthy
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      test: [ "CMD", "curl", "-f", "http://localhost:8080/actuator/health" ]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -27,3 +52,6 @@ services:
 networks:
   app-network:
     driver: bridge
+volumes:
+  postgres-data:
+    driver: local
